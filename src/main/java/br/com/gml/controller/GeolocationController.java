@@ -1,5 +1,6 @@
 package br.com.gml.controller;
 
+import br.com.gml.controller.exceptions.StandardError;
 import br.com.gml.controller.exceptions.ValidationError;
 import br.com.gml.dto.GeolocationDto;
 import br.com.gml.model.Geolocation;
@@ -39,7 +40,7 @@ public class GeolocationController {
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "OK", response = Geolocation.class, responseContainer = "List")
             ,
-            @ApiResponse(code = 404, message = "Not Found", response = ObjectNotFoundException.class)
+            @ApiResponse(code = 404, message = "Not Found", response = StandardError.class)
             ,
             @ApiResponse(code = 422, message = "Validation Erro", response = ValidationError.class)
     })
@@ -56,7 +57,7 @@ public class GeolocationController {
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "OK", response = Geolocation.class)
             ,
-            @ApiResponse(code = 404, message = "Not Found", response = ObjectNotFoundException.class)
+            @ApiResponse(code = 404, message = "Not Found", response = StandardError.class)
             ,
             @ApiResponse(code = 422, message = "Validation Erro", response = ValidationError.class)
     })
@@ -73,7 +74,7 @@ public class GeolocationController {
     @ApiResponses(value = {
             @ApiResponse(code = 201, message = "Resource created", response = Geolocation.class)
             ,
-            @ApiResponse(code = 404, message = "Not Found", response = ObjectNotFoundException.class)
+            @ApiResponse(code = 404, message = "Not Found", response = StandardError.class)
             ,
             @ApiResponse(code = 422, message = "Validation Erro", response = ValidationError.class)
     })
@@ -91,7 +92,7 @@ public class GeolocationController {
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "OK", response = Geolocation.class)
             ,
-            @ApiResponse(code = 404, message = "Not Found", response = ObjectNotFoundException.class)
+            @ApiResponse(code = 404, message = "Not Found", response = StandardError.class)
             ,
             @ApiResponse(code = 422, message = "Validation Erro", response = ValidationError.class)
     })
