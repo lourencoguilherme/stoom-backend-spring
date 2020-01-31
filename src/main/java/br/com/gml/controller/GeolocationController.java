@@ -44,7 +44,7 @@ public class GeolocationController {
             @ApiResponse(code = 422, message = "Validation Erro", response = ValidationError.class)
     })
     @GetMapping
-    public ResponseEntity<List<?>> findAll() {
+    public ResponseEntity<List<Geolocation>>  findAll() {
         return ResponseEntity.ok().body(service.findAll());
     }
 

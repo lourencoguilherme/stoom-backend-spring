@@ -5,12 +5,18 @@ import br.com.gml.repository.GenericRepository;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import java.util.List;
+
 public abstract class Dao <T extends Model, ID>{
 
     protected Logger logger =
             LogManager.getLogger(this.getClass());
 
     abstract GenericRepository repository();
+
+    public List<T> findAll(){
+        return repository().findAll();
+    }
 
     public T findById(ID id){
         return (T) repository().findById(id).orElse(null);

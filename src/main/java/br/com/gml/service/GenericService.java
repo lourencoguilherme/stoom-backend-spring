@@ -1,7 +1,6 @@
 package br.com.gml.service;
 
 import br.com.gml.dao.Dao;
-import br.com.gml.model.Geolocation;
 import br.com.gml.model.Model;
 import br.com.gml.service.exceptions.ObjectNotFoundException;
 import br.com.gml.service.utils.Utils;
@@ -9,13 +8,13 @@ import br.com.gml.service.utils.Utils;
 import java.util.List;
 
 public abstract class GenericService<C extends Model, ID>
-        implements GenericServiceImpl<C, ID> {
+        implements GenericServiceImpl<C,ID> {
 
     public abstract Dao dao();
 
     @Override
     public List<C> findAll() {
-        return null;
+        return dao().findAll();
     }
 
     @Override
