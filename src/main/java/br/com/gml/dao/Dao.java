@@ -1,46 +1,34 @@
 package br.com.gml.dao;
 
-import br.com.gml.model.GenericEntity;
+import br.com.gml.model.Model;
+import br.com.gml.repository.GenericRepository;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-import java.util.Optional;
-
-public abstract class Dao <T extends GenericEntity>{
+public abstract class Dao <T extends Model, ID>{
 
     protected Logger logger =
             LogManager.getLogger(this.getClass());
 
-    @PersistenceContext
-    protected EntityManager em;
+    abstract GenericRepository repository();
 
-    public Optional<T> findById(T entity){
-
-        return (Optional<T>) Optional
-                .ofNullable( em.find( entity.getClass(), entity.getId() ) );
-
+    public T findById(ID id){
+        return (T) repository().findById(id).orElse(null);
     }
 
     public T save (T entity){
-
-        em.persist( entity );
+        repository().save(entity);
         return entity;
-
     }
 
     public T update (T entity){
-
-        em.merge( entity );
+        repository().save(entity);
         return entity;
 
     }
 
     public void remove (T entity){
-
-        em.remove( entity );
-
+        repository().delete(entity);
     }
 }
 

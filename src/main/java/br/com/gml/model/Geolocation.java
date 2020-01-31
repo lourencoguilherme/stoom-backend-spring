@@ -11,7 +11,7 @@ import javax.persistence.Entity;
 @NoArgsConstructor
 @ToString
 @Entity
-public class Geolocation extends GenericEntity<Long> {
+public class Geolocation extends Model<Long> {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -19,7 +19,7 @@ public class Geolocation extends GenericEntity<Long> {
 
     private String streetName;
 
-    private Long number;
+    private Integer number;
 
     private String complement;
 
