@@ -1,6 +1,7 @@
 package br.com.gml.service;
 
 import br.com.gml.DemoApplication;
+import br.com.gml.dto.MapsDto;
 import br.com.gml.model.Geolocation;
 import org.junit.Test;
 import org.junit.jupiter.api.*;
@@ -20,7 +21,10 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class GeolocationServiceTest {
 
     @Autowired
-    public GeolocationService service;
+    private GeolocationService service;
+
+    @Autowired
+    private MapsService mapsService;
 
     @Test
     @Order(1)
@@ -53,10 +57,22 @@ public class GeolocationServiceTest {
         assertThat(objOther).isNull();
     }
 
+    @Test
+    @Order(4)
+    @DisplayName("criate Geolocation lat and lng null")
+    public void criateGeolocationWithoutLatAndLong() {
+        Geolocation obj = makeNewGeolocation();
+        obj.setLongitude(null);
+        obj.setLatitude(null);
+        obj = service.create(obj);
+        MapsDto location = mapsService.findGeocodeByAddress("1600 Amphitheatre Parkway Mountain View, CA 94043");
+        assertThat(obj.getLatitude()).isEqualTo(location.getLat());
+        assertThat(obj.getLongitude()).isEqualTo(location.getLng());
+    }
 
     public Geolocation saveNewGeolocationTest() {
         Geolocation obj = makeNewGeolocation();
-        service.save(obj);
+        service.create(obj);
         return obj;
     }
 

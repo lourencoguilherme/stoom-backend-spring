@@ -1,24 +1,18 @@
-package br.com.gml.model;
+package br.com.gml.dto;
 
+import br.com.gml.model.Geolocation;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
-import javax.persistence.*;
-import javax.persistence.Entity;
+import javax.persistence.Column;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
-import java.util.Objects;
 
 @Data
 @NoArgsConstructor
 @ToString
-@Entity
-public class Geolocation extends Model<Long> {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+public class GeolocationDto {
 
     @NotEmpty(message = "not_null")
     private String streetName;
@@ -49,4 +43,18 @@ public class Geolocation extends Model<Long> {
     @Column(precision=10, scale=2)
     private Double longitude;
 
+    public Geolocation fromEntity() {
+        Geolocation obj = new Geolocation();
+        obj.setStreetName(getStreetName());
+        obj.setNumber(getNumber());
+        obj.setComplement(getComplement());
+        obj.setNeighbourhood(getNeighbourhood());
+        obj.setCity(getCity());
+        obj.setState(getState());
+        obj.setCountry(getCountry());
+        obj.setZipcode(getZipcode());
+        obj.setLatitude(getLatitude());
+        obj.setLongitude(getLongitude());
+        return obj;
+    }
 }

@@ -1,6 +1,5 @@
 package br.com.gml.service;
 
-import br.com.gml.dao.Dao;
 import br.com.gml.model.Model;
 
 import java.util.List;
@@ -10,7 +9,7 @@ public interface GenericServiceImpl <C extends Model , ID> {
 
     C findById(ID id);
 
-    C save(C entity);
+    C create(C entity);
 
     C update(C entity);
 

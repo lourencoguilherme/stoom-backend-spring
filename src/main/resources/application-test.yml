@@ -1,0 +1,29 @@
+jwt:
+  secret: 2bfe7e27-3ed7-4681-be8c-1959f0051404
+  expiration: 86400000
+
+server:
+  servlet:
+    context-path: /api
+
+spring:
+  h2.console:
+    enabled: true
+    path: /h2-console
+    url: jdbc:h2:file:~/geolocation
+    username?: sa
+    password:
+    driver-class-name: org.h2.Driver
+    initialization-mode: always
+  jpa:
+    show-sql: false
+    properties:
+      hibernate:
+        format_sql: true
+        ddl-auto: create-drop
+        implicit_naming_strategy: br.com.gml.config.PluralizeEntity
+
+maps:
+  api:
+    key: AIzaSyBm3xh9oZP1ksMWcMzVaZQevWlrtb8tIgc
+
