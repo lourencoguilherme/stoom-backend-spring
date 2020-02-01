@@ -12,12 +12,16 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
+import java.net.URI;
 import java.util.List;
 
 /**
@@ -28,7 +32,7 @@ import java.util.List;
 @Api(value = "Geolocation registration")
 @RestController
 @RequestMapping(value = "/geolocations")
-public class GeolocationController {
+public class GeolocationController extends GenericController {
 
     @Autowired
     private GeolocationService service;
@@ -72,7 +76,7 @@ public class GeolocationController {
      */
     @ApiOperation(value = "Create Geolocation")
     @ApiResponses(value = {
-            @ApiResponse(code = 201, message = "Resource created", response = Geolocation.class)
+            @ApiResponse(code = 201, message = "CREATED", response = Geolocation.class)
             ,
             @ApiResponse(code = 404, message = "Not Found", response = StandardError.class)
             ,
@@ -80,7 +84,8 @@ public class GeolocationController {
     })
     @PostMapping
     public ResponseEntity<Geolocation> create(@Valid @RequestBody GeolocationDto dto) {
-        return ResponseEntity.ok().body(service.create(dto.fromEntity()));
+        Geolocation obj = service.create(fromDto(null,dto));
+        return (ResponseEntity<Geolocation>) responseTocreated(obj.getId(), obj);
     }
 
     /** Return Object type the class
@@ -90,7 +95,7 @@ public class GeolocationController {
      */
     @ApiOperation(value = "Update Geolocations")
     @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "OK", response = Geolocation.class)
+            @ApiResponse(code = 204, message = "No Content", response = Geolocation.class)
             ,
             @ApiResponse(code = 404, message = "Not Found", response = StandardError.class)
             ,
@@ -98,22 +103,22 @@ public class GeolocationController {
     })
     @PutMapping("{id}")
     public ResponseEntity<Geolocation> update(@Valid @PathVariable @NotNull(message = "not_null") Long id, @Valid @RequestBody GeolocationDto dto) {
-        return ResponseEntity.ok().body(service.update(fromDto(id,dto)));
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).body(service.update(fromDto(id,dto)));
     }
 
     /** Return Object type the class
-     * @param entity Type of Class
+     * @param id Type of Class
      * @return ResponseEntity<Class>
      */
     @ApiOperation(value = "Delete Geolocations")
     @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "OK")
+            @ApiResponse(code = 204, message = "No Content")
             ,
             @ApiResponse(code = 404, message = "Not Found", response = ObjectNotFoundException.class)
     })
     @DeleteMapping(value = "/{id}")
-    public ResponseEntity<?> delete(@Valid @RequestBody Geolocation entity) {
-        service.delete(entity);
+    public ResponseEntity<?> delete(@Valid @PathVariable @NotNull(message = "not_null") Long id) {
+        service.delete(service.findById(id));
         return ResponseEntity.noContent().build();
     }
 

@@ -1,7 +1,9 @@
 package br.com.gml.dao;
 
 import br.com.gml.DemoApplication;
+import br.com.gml.dto.MapsDto;
 import br.com.gml.model.Geolocation;
+import br.com.gml.service.MapsService;
 import org.junit.Test;
 import org.junit.jupiter.api.*;
 import org.junit.runner.RunWith;
@@ -22,10 +24,48 @@ public class GeolocationDaoTest {
     @Autowired
     public GeolocationDao dao;
 
+
     @Test
-    @Order(1)
-    @DisplayName("criate Geolocation")
     public void criateGeolocation() {
+        Geolocation obj = saveNewGeolocationTest();
+        Geolocation objOther = dao.findById(obj.getId());
+        assertThat(obj.getId()).isEqualTo(objOther.getId());
+    }
+
+    @Test
+    public void updateGeolocation() {
+        Geolocation obj = saveNewGeolocationTest();
+        assertThat(obj.getCountry()).isEqualTo(makeNewGeolocation().getCountry());
+        obj.setCountry("USA");
+        dao.update(obj);
+        Geolocation objOther = dao.findById(obj.getId());
+        assertThat(objOther.getCountry()).isNotEqualTo(makeNewGeolocation().getCountry());
+    }
+
+    @Test
+    public void deleteGeolocation() {
+        Geolocation obj = saveNewGeolocationTest();
+        dao.remove(obj);
+        Geolocation objOther = dao.findById(obj.getId());
+        assertThat(objOther).isNull();
+    }
+
+    @Test
+    public void criateGeolocationWithoutLatAndLong() {
+        Geolocation obj = makeNewGeolocation();
+        obj.setLongitude(null);
+        obj.setLatitude(null);
+        obj = dao.save(obj);
+        assertThat(obj.getId()).isNotNull();
+    }
+
+    public Geolocation saveNewGeolocationTest() {
+        Geolocation obj = makeNewGeolocation();
+        dao.save(obj);
+        return obj;
+    }
+
+    public Geolocation makeNewGeolocation() {
         Geolocation obj = new Geolocation();
         obj.setCity("Campinas");
         obj.setCountry("Brasil");
@@ -35,9 +75,9 @@ public class GeolocationDaoTest {
         obj.setNeighbourhood("Centro");
         obj.setStreetName("Bernardino");
         obj.setNumber(1232);
-        dao.save(obj);
-        Geolocation objOther = dao.findById(obj.getId());
-        assertThat(obj.getId()).isEqualTo(objOther.getId());
+        obj.setZipcode(13010151L);
+        obj.setState("São Paulo");
+        return obj;
     }
 
 }

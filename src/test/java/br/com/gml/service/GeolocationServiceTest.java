@@ -27,8 +27,6 @@ public class GeolocationServiceTest {
     private MapsService mapsService;
 
     @Test
-    @Order(1)
-    @DisplayName("criate Geolocation")
     public void criateGeolocation() {
         Geolocation obj = saveNewGeolocationTest();
         Geolocation objOther = service.findById(obj.getId());
@@ -36,8 +34,6 @@ public class GeolocationServiceTest {
     }
 
     @Test
-    @Order(2)
-    @DisplayName("update Geolocation")
     public void updateGeolocation() {
         Geolocation obj = saveNewGeolocationTest();
         assertThat(obj.getCountry()).isEqualTo(makeNewGeolocation().getCountry());
@@ -48,8 +44,6 @@ public class GeolocationServiceTest {
     }
 
     @Test
-    @Order(3)
-    @DisplayName("delete Geolocation")
     public void deleteGeolocation() {
         Geolocation obj = saveNewGeolocationTest();
         service.delete(obj);
@@ -58,16 +52,13 @@ public class GeolocationServiceTest {
     }
 
     @Test
-    @Order(4)
-    @DisplayName("criate Geolocation lat and lng null")
     public void criateGeolocationWithoutLatAndLong() {
         Geolocation obj = makeNewGeolocation();
         obj.setLongitude(null);
         obj.setLatitude(null);
         obj = service.create(obj);
-        MapsDto location = mapsService.findGeocodeByAddress("1600 Amphitheatre Parkway Mountain View, CA 94043");
-        assertThat(obj.getLatitude()).isEqualTo(location.getLat());
-        assertThat(obj.getLongitude()).isEqualTo(location.getLng());
+        assertThat(obj.getLatitude()).isNotNull();
+        assertThat(obj.getLongitude()).isNotNull();
     }
 
     public Geolocation saveNewGeolocationTest() {
@@ -86,6 +77,8 @@ public class GeolocationServiceTest {
         obj.setNeighbourhood("Centro");
         obj.setStreetName("Bernardino");
         obj.setNumber(1232);
+        obj.setZipcode(13010151L);
+        obj.setState("São Paulo");
         return obj;
     }
 

@@ -18,5 +18,6 @@ java -jar backend-0.0.1-SNAPSHOT.jar --spring.profiles.active=test & disown
 ### Docker project
 ``
 docker build -t gui/spring-gml .
-docker run -p 8080:8080 -t gui/spring-gml
+
+docker run -d -p 8080:8080 -t gui/spring-gml
 ``
