@@ -26,12 +26,12 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 public class SwaggerConfig {
 
     private final ResponseMessage m201 = customMessage1();
-    private final ResponseMessage m204put = simpleMessage(204, "Atualização ok");
-    private final ResponseMessage m204del = simpleMessage(204, "Deleção ok");
-    private final ResponseMessage m403 = simpleMessage(403, "Não autorizado");
-    private final ResponseMessage m404 = simpleMessage(404, "Não encontrado");
-    private final ResponseMessage m422 = simpleMessage(422, "Erro de validação");
-    private final ResponseMessage m500 = simpleMessage(500, "Erro inesperado");
+    private final ResponseMessage m204put = simpleMessage(204, "No Content");
+    private final ResponseMessage m204del = simpleMessage(204, "No Content");
+    private final ResponseMessage m403 = simpleMessage(403, "Not authorized");
+    private final ResponseMessage m404 = simpleMessage(404, "Not Found");
+    private final ResponseMessage m422 = simpleMessage(422, "Validation Error");
+    private final ResponseMessage m500 = simpleMessage(500, "Unexpected error");
 
     @Bean
     public Docket api() {
@@ -51,12 +51,12 @@ public class SwaggerConfig {
     }
 
     private ApiInfo apiInfo() {
-        return new ApiInfo("Demo Test for api company",
-                "This API is utilizated for demonstration test for company",
+        return new ApiInfo("Demo Test for backend",
+                "This API is utilizated for test demonstration",
                 "Versão 1.0",
                 "",
                 new Contact("Guilherme Lourenco", "https://github.com/lourencoguilherme/stoom-backend-spring/blob/master/README.md", "guilhermemonteirolourenco@gmail.com"),
-                "Permited for api company",
+                "None",
                 "",
                 Collections.emptyList()
                 // Vendor
@@ -71,11 +71,11 @@ public class SwaggerConfig {
     private ResponseMessage customMessage1() {
 
         Map<String, Header> map = new HashMap<>();
-        map.put("location", new Header("location", "URI do novo recurso", new ModelRef("string")));
+        map.put("location", new Header("location", "New resource URI", new ModelRef("string")));
 
         return new ResponseMessageBuilder()
                 .code(201)
-                .message("Recurso criado")
+                .message("Resource created")
                 .headersWithDescription(map)
                 .build();
     }
