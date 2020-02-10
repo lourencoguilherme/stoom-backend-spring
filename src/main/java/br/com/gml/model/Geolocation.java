@@ -12,13 +12,11 @@ import javax.validation.constraints.NotNull;
 import java.util.Objects;
 
 @Data
-@EqualsAndHashCode(onlyExplicitlyIncluded = true, callSuper = false)
 @NoArgsConstructor
 @ToString
 @Entity
 public class Geolocation extends Model<Long> {
 
-    @EqualsAndHashCode.Include
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
